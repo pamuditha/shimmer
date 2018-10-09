@@ -100,20 +100,9 @@ angular.module('sandboxConsoleApp')
          * from the shim server
          */
         $scope.loadShims = function () {
-            var url = API_ROOT_URL + "/registry";
-            $http.get(url)
-                .success(function (data) {
-                    $scope.shims = data;
-                }).error(function (data, status) {
-                    console.error("Error querying the registry, try again.", status);
-                });
-            $http.get(url + "?available=true")
-                .success(function (data) {
-                    $scope.availables = data;
-                }).error(function (data, status) {
-                    console.error("Error querying the registry, " +
-                        "could not retrieve available shims.", status);
-                });
+          var data = [{shimKey:"googlefit", label:"Google Fit"},{shimKey:"fitbit", label:"Fit Bit"}];
+          $scope.shims = data;
+
         };
 
         /**
@@ -202,7 +191,7 @@ angular.module('sandboxConsoleApp')
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                var url = API_ROOT_URL + "/de-authorize/" + shimKey + "?username=" + record.username;
+                var url = API_ROOT_URL + "/deauthorize/" + shimKey + "?username=" + record.username;
                 $http({
                     url: url,
                     method: 'DELETE'
